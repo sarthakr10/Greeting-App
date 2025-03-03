@@ -4,7 +4,6 @@ import com.exampe.Greeting.model.Greeting;
 import com.exampe.Greeting.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -34,7 +33,11 @@ public class GreetingService {
         return null; // Return null if ID not found
     }
 
-    public List<Greeting> getAllGreetings() {
-        return greetingRepository.findAll(); // Returns list of all greetings
+    public boolean deleteGreeting(Long id) {
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);
+            return true; // Return true if deletion is successful
+        }
+        return false; // Return false if ID does not exist
     }
 }
