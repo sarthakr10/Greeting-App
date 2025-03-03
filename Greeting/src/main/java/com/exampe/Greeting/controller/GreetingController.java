@@ -4,8 +4,6 @@ import com.exampe.Greeting.model.Greeting;
 import com.exampe.Greeting.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
@@ -27,7 +25,12 @@ public class GreetingController {
     }
 
     @GetMapping("/all")
-    public List<Greeting> getAllGreetings() {
+    public Iterable<Greeting> getAllGreetings() {
         return greetingService.getAllGreetings();
+    }
+
+    @PutMapping("/{id}")
+    public Greeting updateGreeting(@PathVariable Long id, @RequestParam String newMessage) {
+        return greetingService.updateGreeting(id, newMessage);
     }
 }
