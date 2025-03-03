@@ -2,6 +2,8 @@ package com.exampe.Greeting;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/greeting")
 public class GreetingController {
@@ -12,12 +14,19 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    @GetMapping
-    public GreetingResponse getGreeting(
+    @PostMapping
+    public GreetingResponse saveGreeting(
             @RequestParam(required = false) String firstName,
             @RequestParam(required = false) String lastName) {
 
-        String message = greetingService.getGreetingMessage(firstName, lastName);
-        return new GreetingResponse(message);
+        Greeting greeting = greetingService.saveGreeting(firstName, lastName);
+        return new GreetingResponse(greeting.getMessage());
+    }
+
+    @GetMapping("/{id}")
+    public GreetingResponse getGreeting(@PathVariable Long id) {
+        Optional<Greeting> greeting = greetingService.getGreetingById(id);
+        return greeting.map(g -> new GreetingResponse(g.getMessage()))
+                .orElse(new GreetingResponse("Greeting not found"));
     }
 }

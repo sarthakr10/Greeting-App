@@ -1,19 +1,35 @@
 package com.exampe.Greeting;
 
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class GreetingService {
 
-    public String getGreetingMessage(String firstName, String lastName) {
+    private final GreetingRepository greetingRepository;
+
+    public GreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
+    }
+
+    public Greeting saveGreeting(String firstName, String lastName) {
+        String message;
         if (firstName != null && lastName != null) {
-            return "Hello, " + firstName + " " + lastName + "!";
+            message = "Hello, " + firstName + " " + lastName + "!";
         } else if (firstName != null) {
-            return "Hello, " + firstName + "!";
+            message = "Hello, " + firstName + "!";
         } else if (lastName != null) {
-            return "Hello, " + lastName + "!";
+            message = "Hello, " + lastName + "!";
         } else {
-            return "Hello World!";
+            message = "Hello World!";
         }
+
+        Greeting greeting = new Greeting(message);
+        return greetingRepository.save(greeting);
+    }
+
+    public Optional<Greeting> getGreetingById(Long id) {
+        return greetingRepository.findById(id);
     }
 }
+
