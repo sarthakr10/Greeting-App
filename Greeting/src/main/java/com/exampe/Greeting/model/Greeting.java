@@ -1,4 +1,4 @@
-package com.exampe.Greeting;
+package com.exampe.Greeting.model;
 
 import jakarta.persistence.*;
 
