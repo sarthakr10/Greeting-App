@@ -1,6 +1,6 @@
 package com.exampe.Greeting;
 
-class GreetingResponse {
+public class GreetingResponse {
     private String message;
 
     public GreetingResponse(String message) {

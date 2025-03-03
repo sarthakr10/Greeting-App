@@ -6,23 +6,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/greeting")
 public class GreetingController {
 
+    private final GreetingService greetingService;
+
+    public GreetingController(GreetingService greetingService) {
+        this.greetingService = greetingService;
+    }
+
     @GetMapping
     public GreetingResponse getGreeting() {
-        return new GreetingResponse("Hello from GET!");
-    }
-
-    @PostMapping
-    public GreetingResponse postGreeting() {
-        return new GreetingResponse("Hello from POST!");
-    }
-
-    @PutMapping
-    public GreetingResponse putGreeting() {
-        return new GreetingResponse("Hello from PUT!");
-    }
-
-    @DeleteMapping
-    public GreetingResponse deleteGreeting() {
-        return new GreetingResponse("Hello from DELETE!");
+        return new GreetingResponse(greetingService.getGreetingMessage());
     }
 }
