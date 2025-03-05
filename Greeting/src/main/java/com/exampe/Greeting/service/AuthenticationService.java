@@ -35,11 +35,34 @@ public class AuthenticationService {
         return "User registered successfully!";
     }
 
-    public String login(LoginDTO loginDTO) {
-        Optional<AuthUser> userOptional = authUserRepository.findByEmail(loginDTO.getEmail());
-        if (userOptional.isEmpty() || !passwordEncoder.matches(loginDTO.getPassword(), userOptional.get().getPassword())) {
-            return "Invalid email or password!";
-        }
-        return jwtUtil.generateToken(userOptional.get().getEmail());
+//    public String login(LoginDTO loginDTO) {
+//        Optional<AuthUser> userOptional = authUserRepository.findByEmail(loginDTO.getEmail());
+//        if (userOptional.isEmpty() || !passwordEncoder.matches(loginDTO.getPassword(), userOptional.get().getPassword())) {
+//            return "Invalid email or password!";
+//        }
+//        return jwtUtil.generateToken(userOptional.get().getEmail());
+//    }
+public String login(LoginDTO loginDTO) {
+    Optional<AuthUser> userOptional = authUserRepository.findByEmail(loginDTO.getEmail());
+
+    if (userOptional.isEmpty()) {
+        System.out.println("🚨 DEBUG: User not found in the database.");
+        return "User not found!";
     }
+
+    AuthUser user = userOptional.get();
+    System.out.println("🔹 DEBUG: Found user with email: " + user.getEmail());
+    System.out.println("🔹 DEBUG: Hashed password in DB: " + user.getPassword());
+
+    // Check password
+    boolean passwordMatches = passwordEncoder.matches(loginDTO.getPassword(), user.getPassword());
+    System.out.println("🔹 DEBUG: Password match result: " + passwordMatches);
+
+    if (!passwordMatches) {
+        return "Invalid email or password!";
+    }
+
+    return jwtUtil.generateToken(user.getEmail());
+}
+
 }
