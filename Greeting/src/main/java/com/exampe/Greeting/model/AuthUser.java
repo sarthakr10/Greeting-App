@@ -30,9 +30,14 @@ public class AuthUser {
     @Column(nullable = false)
     private String password;
 
+//    public void setPassword(String password) {
+//        this.password = new BCryptPasswordEncoder().encode(password);
+//    }
+
     public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
+        this.password = password;  // Assign directly without hashing
     }
+
 
     public String getFirstName() {
         return firstName;
