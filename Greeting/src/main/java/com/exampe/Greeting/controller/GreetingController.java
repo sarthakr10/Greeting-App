@@ -2,6 +2,7 @@ package com.exampe.Greeting.controller;
 
 import com.exampe.Greeting.model.Greeting;
 import com.exampe.Greeting.service.GreetingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,7 +11,8 @@ import java.util.List;
 @RequestMapping("/greeting")
 public class GreetingController {
 
-    private final GreetingService greetingService;
+    @Autowired
+    GreetingService greetingService;
 
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;

@@ -1,12 +1,14 @@
 package com.exampe.Greeting.controller;
 import com.exampe.Greeting.service.EmailService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/email")
 public class EmailController {
 
-    private final EmailService emailService;
+    @Autowired
+    EmailService emailService;
 
     public EmailController(EmailService emailService) {
         this.emailService = emailService;

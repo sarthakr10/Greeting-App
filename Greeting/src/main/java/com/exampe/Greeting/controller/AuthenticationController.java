@@ -18,7 +18,8 @@ public class AuthenticationController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationController.class);
 
-    private final AuthenticationService authenticationService;
+    @Autowired
+    AuthenticationService authenticationService;
 
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
